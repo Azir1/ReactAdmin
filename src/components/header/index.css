@@ -1,0 +1,40 @@
+.header{
+    background-color: #fff;
+    height: 80px;
+    /* background-color: blueviolet; */
+}
+
+.header-top{
+    font-size: 14px;
+    line-height: 40px;
+    color: rebeccapurple;
+    border-bottom: 1px solid green;
+    text-align: right;
+    padding-right: 30px;
+}
+.header-top span{
+    margin-right: 10px;
+}
+
+.header-bottom{
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.header-bottom-left{
+    width: 25%;
+    text-align: center;
+    font-size: 20px;
+}
+.header-bottom-right{
+    width: 75%;
+    text-align: right;
+    padding-right: 30px;
+
+}
+.header-bottom-right img{
+    padding: 0 16px 0 16px;
+    height: 20px;
+    width: 20px;
+}
+
