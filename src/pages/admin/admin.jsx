@@ -27,7 +27,7 @@ class Admin extends Component {
             return <Redirect to='/login' />
             
         }
-        console.log(user)
+       
         return (
                 <Layout style={{height:'100%'}}>
                     <Sider><LeftNav /></Sider>

@@ -10,6 +10,8 @@
     同时import 导入时也不用{} 实现导入。
 */ 
 import ajax from './ajax'
+import jsonp from 'jsonp'
+import { message } from 'antd'
 
 // 登录接口
 // export function reqLogin(username,password){
@@ -21,3 +23,50 @@ export const reqLogin = (username,password)=>ajax(BASE+'/login',{username,passwo
 
 // 添加用户
 export const reqAddUser = (user)=>ajax(BASE+'/manage/user/add',user,'POST')
+
+// jsonp请求的接口请求函数
+/*jsonp解决ajax跨域的原理：
+  1、jsonp只能解决GET类型的ajax请求跨域问题
+  2、jsonp不是ajax请求，而是一般的get   请求
+  3、基本原理：
+    浏览器端：动态生成<script>来请求后台接口（src就是接口的url）
+
+  */ 
+// tip：所有的接口请求函数都要返回一个promise对象
+export function reqWeather(city){
+    return new Promise((resolve,reject)=>{
+        const url = `http://api.map.baidu.com/telematics/v3/weather?location=${city}&output=json&ak=3p49MVra6urFRGOT9s8UBWr2`
+        jsonp(url,{},(err,data)=>{
+            console.log('jsonp()',err,data)
+            if (!err && data.status==='success') {
+                // 可以解构获取需要的天气数据
+                const {dayPictureUrl,weather} = data.results[0].weather_data[0]
+                resolve({dayPictureUrl,weather})
+            }else{
+                // 如果失败了
+                message.error('获取天气信息失败')
+            }
+        })
+
+    })
+}
+// reqWeather('南京')
+
+//获取一级或二级分类列表
+export const reqCategory= (parentId)=> ajax(BASE+'/manage/category/list',{parentId})
+
+// 添加分类
+export const reqAddCategory = (parentId,categoryName)=> ajax(BASE+'/manage/category/add',{parentId,categoryName},'POST')
+
+// 更新品类名称
+export const reqUpdateCategory = ({categoryId,categoryName})=>ajax(BASE+'/manage/category/update',{categoryId,categoryName},'POST')
+
+
+
+
+
+
+
+
+
+
