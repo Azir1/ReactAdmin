@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './index.css'
 import logo from '../../assets/images/logo.png'
-import {Link , withRouter} from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 // 引入AntD导航菜单
-import { Menu, Icon} from 'antd';
+import { Menu, Icon } from 'antd';
 import menuList from '../../config/menuConfig'
 
 const { SubMenu } = Menu;
@@ -46,47 +46,47 @@ class LeftNav extends Component {
                 },[]))
             }
     */
-    getMenuNodes = (menuList)=>{
+    getMenuNodes = (menuList) => {
         const path = this.props.location.pathname
-        return menuList.map(item=>{
-                // 取path，判断是否有子item打开
-                if (!item.children) {
-                    return(
-                        <Menu.Item key={item.key}>
-                            <Link to ={item.key} className='underLine'>
-                                <Icon type={item.icon} />
-                                <span>{item.title}</span>
-                            </Link>
-                        </Menu.Item>
-                    )
-                }else{
-                    // find()查找,查找一个与当前请求路径匹配的子item
-                    const cItem = item.children.find(cItem =>path.indexOf(cItem.key)===0)
-                    
-                    // 如果存在，说明当前item的子列表需要打开
-                    if (cItem) {
-                        this.openKey = item.key
-                        
-                    }
-                    return(
-                        <SubMenu
-                            key={item.key}
-                            title={
+        return menuList.map(item => {
+            // 取path，判断是否有子item打开
+            if (!item.children) {
+                return (
+                    <Menu.Item key={item.key}>
+                        <Link to={item.key} className='underLine'>
+                            <Icon type={item.icon} />
+                            <span>{item.title}</span>
+                        </Link>
+                    </Menu.Item>
+                )
+            } else {
+                // find()查找,查找一个与当前请求路径匹配的子item
+                const cItem = item.children.find(cItem => path.indexOf(cItem.key) === 0)
+
+                // 如果存在，说明当前item的子列表需要打开
+                if (cItem) {
+                    this.openKey = item.key
+
+                }
+                return (
+                    <SubMenu
+                        key={item.key}
+                        title={
                             <span>
                                 <Icon type={item.icon} />
                                 <span> {item.title} </span>
                             </span>
-                            }
-                        >
-                            {this.getMenuNodes(item.children)}
-                          
-                        </SubMenu>
-                    )
-                }   
+                        }
+                    >
+                        {this.getMenuNodes(item.children)}
+
+                    </SubMenu>
+                )
+            }
         })
     }
     // 第一次render之前,为第一个render（）准备数据（必须同步的）
-    componentWillMount(){
+    UNSAFE_componentWillMount() {
         // 先传值
         this.menuNodes = this.getMenuNodes(menuList)
     }
@@ -97,23 +97,23 @@ class LeftNav extends Component {
         // 得到需要打开菜单项的key
         const openKey = this.openKey
         return (
-                <div className='left-nav'>
-                    <Link to='/' className='underLine'>
-                        <header className='left-nav-header'>
-                            <img src={logo} alt=""/>
-                            <h1>后台管理系统</h1>
-                        </header>
-                    </Link>
-                    {/* 导航菜单 */}
-                    <div style={{ width: 200 }}>
-                        <Menu
+            <div className='left-nav'>
+                <Link to='/' className='underLine'>
+                    <header className='left-nav-header'>
+                        <img src={logo} alt="" />
+                        <h1>后台管理系统</h1>
+                    </header>
+                </Link>
+                {/* 导航菜单 */}
+                <div style={{ width: 200 }}>
+                    <Menu
                         // 根据路由动态选中，比defaultSelectedKeys好用
                         selectedKeys={[path]}
                         defaultOpenKeys={[openKey]}
                         mode="inline"
                         theme="dark"
-                        // inlineCollapsed={this.state.collapsed}
-                        >
+                    // inlineCollapsed={this.state.collapsed}
+                    >
                         {/* <Menu.Item key="/home">
                             <Link to ='/home' className='underLine'>
                                 <Icon type="pie-chart" />
@@ -187,14 +187,14 @@ class LeftNav extends Component {
                             this.menuNodes
                             // this.getMenuNodes(menuList)
                         }
-                        </Menu>
-                    </div>
+                    </Menu>
                 </div>
+            </div>
         );
     }
 }
 /*withRouter高阶组件（把一个非路由组件的组件，变成一个路由组件）
     包装非路由组件，返回一个新的组件
     新的组件向非路由组件传递三个属性match location history
-*/ 
-export default withRouter(LeftNav) ;
+*/
+export default withRouter(LeftNav);

@@ -37,7 +37,6 @@ export function reqWeather(city){
     return new Promise((resolve,reject)=>{
         const url = `http://api.map.baidu.com/telematics/v3/weather?location=${city}&output=json&ak=3p49MVra6urFRGOT9s8UBWr2`
         jsonp(url,{},(err,data)=>{
-            console.log('jsonp()',err,data)
             if (!err && data.status==='success') {
                 // 可以解构获取需要的天气数据
                 const {dayPictureUrl,weather} = data.results[0].weather_data[0]
@@ -58,7 +57,7 @@ export const reqCategory= (parentId)=> ajax(BASE+'/manage/category/list',{parent
 // 添加分类
 export const reqAddCategory = (parentId,categoryName)=> ajax(BASE+'/manage/category/add',{parentId,categoryName},'POST')
 
-// 更新品类名称
+// 更新品类名称,需要一个categoryId,categoryName的对象
 export const reqUpdateCategory = ({categoryId,categoryName})=>ajax(BASE+'/manage/category/update',{categoryId,categoryName},'POST')
 
 

@@ -21,11 +21,7 @@ export default function ajax(url,data={},type='GET'){
         let promise
         // 1、执行异步ajax请求
         if (type==='GET') { //发GET请求
-            promise = axios.get(url,{ //配置对象
-                params:{
-                    ID: data  //指定请求参数
-                }
-            })
+            promise = axios.get(url,{params:data}) //配置对象******
         }else{             //发post请求
             promise = axios.post(url,data)
         }
