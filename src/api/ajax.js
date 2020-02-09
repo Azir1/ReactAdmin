@@ -5,7 +5,7 @@
 url地址，data不一定有对象，所以指定{}默认值，GET是最常用的请求方式
 url请求地址，data请求数据类型，type请求方式
 因为params是添加到url的请求字符串中的，用于get请求。 
-而data是添加到请求体（body）中的， 用于post请求。
+而data是添加到请求体（body）中的，用于post请求。
 
 1、优化：统一处理请求异常
     在外层包一个自己创建的promise对象
@@ -21,11 +21,7 @@ export default function ajax(url,data={},type='GET'){
         let promise
         // 1、执行异步ajax请求
         if (type==='GET') { //发GET请求
-            promise = axios.get(url,{ //配置对象
-                params:{
-                    ID: data  //指定请求参数
-                }
-            })
+            promise = axios.get(url,{params:data}) //配置对象******
         }else{             //发post请求
             promise = axios.post(url,data)
         }
