@@ -8,7 +8,7 @@
     2、
     export default导出时，不用使用{} 进行导出对应的模块、函数、文件等。但是只能导出一个。
     同时import 导入时也不用{} 实现导入。
-*/ 
+*/
 import ajax from './ajax'
 import jsonp from 'jsonp'
 import { message } from 'antd'
@@ -19,10 +19,10 @@ import { message } from 'antd'
 // }
 const BASE = ''
 // 推荐箭头函数来写
-export const reqLogin = (username,password)=>ajax(BASE+'/login',{username,password},'POST')
+export const reqLogin = (username, password) => ajax(BASE + '/login', { username, password }, 'POST')
 
 // 添加用户
-export const reqAddUser = (user)=>ajax(BASE+'/manage/user/add',user,'POST')
+export const reqAddUser = (user) => ajax(BASE + '/manage/user/add', user, 'POST')
 
 // jsonp请求的接口请求函数
 /*jsonp解决ajax跨域的原理：
@@ -31,17 +31,17 @@ export const reqAddUser = (user)=>ajax(BASE+'/manage/user/add',user,'POST')
   3、基本原理：
     浏览器端：动态生成<script>来请求后台接口（src就是接口的url）
 
-  */ 
+  */
 // tip：所有的接口请求函数都要返回一个promise对象
-export function reqWeather(city){
-    return new Promise((resolve,reject)=>{
+export function reqWeather(city) {
+    return new Promise((resolve, reject) => {
         const url = `http://api.map.baidu.com/telematics/v3/weather?location=${city}&output=json&ak=3p49MVra6urFRGOT9s8UBWr2`
-        jsonp(url,{},(err,data)=>{
-            if (!err && data.status==='success') {
+        jsonp(url, {}, (err, data) => {
+            if (!err && data.status === 'success') {
                 // 可以解构获取需要的天气数据
-                const {dayPictureUrl,weather} = data.results[0].weather_data[0]
-                resolve({dayPictureUrl,weather})
-            }else{
+                const { dayPictureUrl, weather } = data.results[0].weather_data[0]
+                resolve({ dayPictureUrl, weather })
+            } else {
                 // 如果失败了
                 message.error('获取天气信息失败')
             }
@@ -52,20 +52,26 @@ export function reqWeather(city){
 // reqWeather('南京')
 
 //获取一级或二级分类列表
-export const reqCategory= (parentId)=> ajax(BASE+'/manage/category/list',{parentId})
+export const reqCategory = (parentId) => ajax(BASE + '/manage/category/list', { parentId })
 
 // 添加分类
-export const reqAddCategory = (parentId,categoryName)=> ajax(BASE+'/manage/category/add',{parentId,categoryName},'POST')
+export const reqAddCategory = (parentId, categoryName) => ajax(BASE + '/manage/category/add', { parentId, categoryName }, 'POST')
 
 // 更新品类名称,需要一个categoryId,categoryName的对象
-export const reqUpdateCategory = ({categoryId,categoryName})=>ajax(BASE+'/manage/category/update',{categoryId,categoryName},'POST')
+export const reqUpdateCategory = ({ categoryId, categoryName }) => ajax(BASE + '/manage/category/update', { categoryId, categoryName }, 'POST')
 
+// 请求商品分页列表
+export const reqProducts = (pageNum, pageSize) => ajax(BASE + '/manage/product/list', { pageNum, pageSize })
 
+// 商品上架/下架处理
+export const reqUpdateStatus = ( productId, status ) => ajax(BASE + '/manage/product/updateStatus', { productId, status }, 'POST')
 
+// 商品搜索,searchName表示搜索关键字
+// searchType有两个值productName/productDesc，用变量值作为属性名的时候要加[]
+export const reqSearchProducts = ({pageNum,pageSize,searchName,searchType}) => ajax(BASE + '/manage/product/search',{
+                        pageNum,pageSize,[searchType]:searchName})
 
-
-
-
-
+// 获取商品的分类，父分类，子分类
+export const reqProductCategory = (categoryId)=>ajax(BASE+'/manage/category/info',{categoryId})
 
 

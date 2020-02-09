@@ -5,7 +5,7 @@
 url地址，data不一定有对象，所以指定{}默认值，GET是最常用的请求方式
 url请求地址，data请求数据类型，type请求方式
 因为params是添加到url的请求字符串中的，用于get请求。 
-而data是添加到请求体（body）中的， 用于post请求。
+而data是添加到请求体（body）中的，用于post请求。
 
 1、优化：统一处理请求异常
     在外层包一个自己创建的promise对象

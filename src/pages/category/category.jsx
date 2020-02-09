@@ -182,7 +182,7 @@ class Category extends Component {
             pagination={{
               pageSize: 11,
               showQuickJumper: true,
-              showSizeChanger: true,
+              // showSizeChanger: true,
             }}
           />
         </Card>
